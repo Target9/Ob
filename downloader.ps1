@@ -1,6 +1,3 @@
-# Bypass SSL verification
-[System.Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
-
 # Hide PowerShell Console Window
 Add-Type -TypeDefinition @"
 using System;
