@@ -1,3 +1,23 @@
+# Check for admin privileges; if not, relaunch the script as admin
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltinRole] "Administrator"))
+{
+    # Relaunch the script with elevated permissions and exit this non-elevated instance
+    $script = $MyInvocation.MyCommand.Definition
+    $arguments = $MyInvocation.UnboundArguments
+    $argString = $arguments -join ' '
+
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName = 'powershell.exe'
+    $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$script`" $argString"
+    $psi.Verb = 'runas'
+    try {
+        [Diagnostics.Process]::Start($psi) | Out-Null
+    } catch {
+        Write-Output "User declined the elevation prompt. Exiting..."
+    }
+    exit
+}
+
 # Hide PowerShell Console Window
 Add-Type -TypeDefinition @"
 using System;
